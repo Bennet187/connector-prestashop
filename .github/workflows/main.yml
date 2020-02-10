@@ -35,5 +35,5 @@ jobs:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          ARGS: --delete --verbose --ignore-time
+          ARGS: --verbose --ignore-time
           REMOTE_DIRECTORY: test
