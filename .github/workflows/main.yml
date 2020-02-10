@@ -25,10 +25,6 @@ jobs:
           echo cd build
           cd build 
           ls
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: Dateien in FTP ablegen
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
         env:
