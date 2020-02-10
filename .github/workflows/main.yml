@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - feature/github-actions
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Umgebung vorbereiten
+        uses: docker://php:latest
+      - uses: docker://composer:latest
+      - name: Auschecken des Repository
+        uses: actions/checkout@v2
+        with:
+          repository: 'Bennet187/actionstester'
+          ref: 'feature/github-actions'
+          token: '7c615de34514949320365d69cda031472737fb5f'
+          clean: 'false'
+      - name: Buildprozess
+        run: |
+          cd GITHUB_WORKSPACE
+          ls
+          ./build
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dateien in FTP ablegen
+        uses: SamKirkland/FTP-Deploy-Action@2.0.0
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          LOCAL_DIR: build
+          ARGS: --delete --verbose --ignore-time
+          REMOTE_DIRECTORY: test
