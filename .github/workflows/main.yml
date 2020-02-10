@@ -19,7 +19,9 @@ jobs:
           clean: 'false'
       - name: Buildprozess
         run: |
-          echo GITHUB_WORKSPACE
+          cd $GITHUB_WORKSPACE
+          ls
+          ./build.sh
   deploy:
     needs: build
     runs-on: ubuntu-latest
