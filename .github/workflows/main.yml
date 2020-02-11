@@ -19,6 +19,7 @@ jobs:
           clean: 'false'
       - name: Buildprozess
         run: ./build.sh
+# nicht sicher, ob das success tatsächlich nötig ist
       - if: success()
         name: Dateien in FTP ablegen
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
