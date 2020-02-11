@@ -19,9 +19,8 @@ jobs:
           clean: 'false'
       - name: Buildprozess
         run: |
-          cd $GITHUB_WORKSPACE
           ./build.sh
-          ls
+#          cd $GITHUB_WORKSPACE
       - if: success()
         name: Dateien in FTP ablegen
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
@@ -30,6 +29,5 @@ jobs:
           FTP_USERNAME: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           ARGS: --verbose --ignore-time
-          REMOTE_DIR: test
+          REMOTE_DIR: build
           LOCAL_DIR: build
-
