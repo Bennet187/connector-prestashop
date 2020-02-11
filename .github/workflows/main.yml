@@ -9,8 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Umgebung vorbereiten
-        uses: docker://php:latest
+        uses: shivammathur/setup-php@v1
         with: 
+          php-version: '7.4'
           ini-values: phar.readonly=Off
       - uses: docker://composer:latest
       - name: Auschecken des Repository
