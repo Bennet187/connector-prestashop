@@ -11,12 +11,12 @@ jobs:
       - name: Umgebung vorbereiten
         uses: docker://php:latest
       - uses: docker://composer:latest
-      - name: Auschecken des Repository
-        uses: actions/checkout@v2
-        with:
-          repository: 'Bennet187/connector-prestashop'
-          ref: 'feature/github-actions'
-          clean: 'false'
+#      - name: Auschecken des Repository
+#        uses: actions/checkout@v2
+#        with:
+#          repository: 'Bennet187/connector-prestashop'
+#          ref: 'feature/github-actions'
+#          clean: 'false'
       - name: Buildprozess
         run: ./build.sh
       - if: success()
