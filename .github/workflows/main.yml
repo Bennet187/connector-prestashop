@@ -20,12 +20,20 @@ jobs:
       - name: Buildprozess
         run: ./build.sh
       - if: success()
-        name: Dateien in FTP ablegen
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0
-        env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USER }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          ARGS: --verbose --ignore-time
-          REMOTE_DIR: build
-          LOCAL_DIR: build
+      # name: Dateien in FTP ablegen
+      # uses: SamKirkland/FTP-Deploy-Action@2.0.0
+      # env:
+      #   FTP_SERVER: ${{ secrets.FTP_SERVER }}
+      #   FTP_USERNAME: ${{ secrets.FTP_USER }}
+      #   FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      #   ARGS: --verbose --ignore-time
+      #   REMOTE_DIR: build
+      #   LOCAL_DIR: build
+        name: Dateien in FTP ablegen (sebastianpopp)
+        uses: sebastianpopp/ftp-action@releases/v1
+        with:
+          host: ${{ secrets.FTP_SERVER }}
+          user: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          localDir: "build"
+          remoteDir: "build"
