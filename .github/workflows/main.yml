@@ -32,6 +32,6 @@ jobs:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          ARGS: --verbose --ignore-time
+          ARGS: --verbose 
           REMOTE_DIR: build
           LOCAL_DIR: zip
