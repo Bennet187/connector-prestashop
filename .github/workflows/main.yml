@@ -18,10 +18,7 @@ jobs:
           ref: 'feature/github-actions'
           clean: 'false'
       - name: Buildprozess
-        run: |
-          apt install speedtest-cli
-          speedtest
-          ./build.sh
+        run: ./build.sh
       - if: success()
         name: Dateien in FTP ablegen
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
