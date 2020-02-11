@@ -21,17 +21,18 @@ jobs:
           ref: 'feature/github-actions'
           clean: 'false'
       - name: Buildprozess
-        run: |
-          ./build.sh
-          mkdir test
-          mv *.zip $GITHUB_WORKSPACE/test
-      - if: success()
-        name: Dateien in FTP ablegen
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0
-        env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USER }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          ARGS: --verbose --ignore-time
-          REMOTE_DIR: build
-          LOCAL_DIR: test
+        run: apachectl -v
+     #   run: |
+     #     ./build.sh
+     #     mkdir test
+     #     mv *.zip $GITHUB_WORKSPACE/test
+     # - if: success()
+     #   name: Dateien in FTP ablegen
+     #   uses: SamKirkland/FTP-Deploy-Action@2.0.0
+     #   env:
+     #     FTP_SERVER: ${{ secrets.FTP_SERVER }}
+     #     FTP_USERNAME: ${{ secrets.FTP_USER }}
+     #     FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+     #     ARGS: --verbose --ignore-time
+     #     REMOTE_DIR: build
+     #     LOCAL_DIR: test
