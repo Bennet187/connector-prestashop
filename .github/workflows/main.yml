@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Umgebung vorbereiten
         uses: docker://php:latest
+        with: 
+          ini-values: phar.readonly=Off
       - uses: docker://composer:latest
       - name: Auschecken des Repository
         uses: actions/checkout@v2
@@ -18,7 +20,10 @@ jobs:
           ref: 'feature/github-actions'
           clean: 'false'
       - name: Buildprozess
-        run: ./build.sh
+        run: |
+          ./build.sh
+          mkdir test
+          mv *.zip $GITHUB_WORKSPACE/test
       - if: success()
         name: Dateien in FTP ablegen
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
@@ -28,4 +33,4 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           ARGS: --verbose --ignore-time
           REMOTE_DIR: build
-          LOCAL_DIR: build
+          LOCAL_DIR: test
