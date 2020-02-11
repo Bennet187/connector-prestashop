@@ -21,13 +21,15 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           ./build.sh
-      - if: success()
-        name: Dateien in FTP ablegen
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0
-        env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USER }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          ARGS: --verbose --ignore-time
-          REMOTE_DIR: test
-          LOCAL_DIR: build
+          ls
+#      - if: success()
+#        name: Dateien in FTP ablegen
+#        uses: SamKirkland/FTP-Deploy-Action@2.0.0
+#        env:
+#          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+#          FTP_USERNAME: ${{ secrets.FTP_USER }}
+#          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+#          ARGS: --verbose --ignore-time
+#          REMOTE_DIR: test
+#          LOCAL_DIR: build
+#
