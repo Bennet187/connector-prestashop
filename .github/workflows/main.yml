@@ -13,6 +13,8 @@ jobs:
         with: 
           php-version: '7.4'
           ini-values: phar.readonly=Off
+      - run: sudo apt-get update
+             sudo apt-get install apache2
       - uses: docker://composer:latest
       - name: Repo auschecken
         uses: actions/checkout@v2
@@ -22,19 +24,16 @@ jobs:
           clean: 'false'
       - name: Buildprozess
         run: |
-          sudo apt-get update
-          sudo apt-get install apache2
-          sudo apachectl -v
-     #     ./build.sh
-     #     mkdir zip
-     #     mv *.zip $GITHUB_WORKSPACE/zip
-     # - if: success()
-     #   name: FTP Upload
-     #   uses: SamKirkland/FTP-Deploy-Action@2.0.0
-     #   env:
-     #     FTP_SERVER: ${{ secrets.FTP_SERVER }}
-     #     FTP_USERNAME: ${{ secrets.FTP_USER }}
-     #     FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-     #     ARGS: --verbose 
-     #     REMOTE_DIR: build
-     #     LOCAL_DIR: zip
+          ./build.sh
+          mkdir zip
+          mv *.zip $GITHUB_WORKSPACE/zip
+      - if: success()
+        name: FTP Upload
+        uses: SamKirkland/FTP-Deploy-Action@2.0.0
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          ARGS: --verbose 
+          REMOTE_DIR: build
+          LOCAL_DIR: zip
