@@ -24,6 +24,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install apache2
+          sudo apachectl -v
      #     ./build.sh
      #     mkdir zip
      #     mv *.zip $GITHUB_WORKSPACE/zip
