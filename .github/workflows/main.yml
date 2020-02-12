@@ -23,18 +23,24 @@ jobs:
           repository: 'Bennet187/connector-prestashop'
           ref: 'feature/github-actions'
           clean: 'false'
-      - name: Buildprozess
+      - name: Prestashop-Installation Test
         run: |
-          ./build.sh
-          mkdir zip
-          mv *.zip $GITHUB_WORKSPACE/zip
-      - if: success()
-        name: FTP Upload
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0
-        env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USER }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          ARGS: --verbose 
-          REMOTE_DIR: build
-          LOCAL_DIR: zip
+            cd /var/www/html
+            wget https://download.prestashop.com/download/releases/prestashop_1.7.6.3.zip
+            unzip prestashop_1.7.6.3.zip
+            php index_cli.php --domain=localhost --db_server=localhost --db_name=test --db_user=admin --db_password=admin --name=prestatest --firstname=ben --lastname=mo --password=admin --email=benjamin.mohr@jtl-software.com --language=de --newsletter=0 --country=de
+     # - name: Buildprozess
+     #   run: |
+     #     ./build.sh
+     #     mkdir zip
+     #     mv *.zip $GITHUB_WORKSPACE/zip
+     # - if: success()
+     #   name: FTP Upload
+     #   uses: SamKirkland/FTP-Deploy-Action@2.0.0
+     #   env:
+     #     FTP_SERVER: ${{ secrets.FTP_SERVER }}
+     #     FTP_USERNAME: ${{ secrets.FTP_USER }}
+     #     FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+     #     ARGS: --verbose 
+     #     REMOTE_DIR: build
+     #     LOCAL_DIR: zip
