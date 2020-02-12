@@ -13,8 +13,9 @@ jobs:
         with: 
           php-version: '7.4'
           ini-values: phar.readonly=Off
-      - run: sudo apt-get update
-             sudo apt-get install apache2
+      - run: |
+            sudo apt-get update
+            sudo apt-get install apache2
       - uses: docker://composer:latest
       - name: Repo auschecken
         uses: actions/checkout@v2
