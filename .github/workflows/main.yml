@@ -39,6 +39,7 @@ jobs:
             sudo unzip prestashop.zip
             echo ----------------------------FERTIG MIT UNZIP--------------------------------
             cd /var/www/html/install
+            sudo compser
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=test
      # - name: Buildprozess
      #   run: |
