@@ -22,7 +22,7 @@ jobs:
           clean: 'false'
       - name: Buildprozess
         run: |
-          mysql -v
+          sudo mysql -v
       #    ./build.sh
       #    mkdir zip
       #    mv *.zip $GITHUB_WORKSPACE/zip
