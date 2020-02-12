@@ -8,13 +8,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Umgebung vorbereiten
+      - name: PHP- und Composer-Setup
         uses: shivammathur/setup-php@v1
         with: 
           php-version: '7.4'
           ini-values: phar.readonly=Off
       - uses: docker://composer:latest
-      - name: Auschecken des Repository
+      - name: Repo auschecken
         uses: actions/checkout@v2
         with:
           repository: 'Bennet187/connector-prestashop'
@@ -26,7 +26,7 @@ jobs:
           mkdir zip
           mv *.zip $GITHUB_WORKSPACE/zip
       - if: success()
-        name: Dateien in FTP ablegen
+        name: FTP Upload
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
