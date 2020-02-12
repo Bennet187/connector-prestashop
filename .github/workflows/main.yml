@@ -31,6 +31,7 @@ jobs:
             sudo unzip prestashop_1.7.6.3.zip
             sudo rm prestashop_1.7.6.3.zip Install_PrestaShop.html index.php
             sudo unzip prestashop.zip
+            echo ----------------------------FERTIG MIT UNZIP--------------------------------
             cd /var/www/html/install
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=test --db_user=admin --db_password=admin --name=prestatest --firstname=ben --lastname=mo --password=admin --email=benjamin.mohr@jtl-software.com --language=de --newsletter=0 --country=de
      # - name: Buildprozess
