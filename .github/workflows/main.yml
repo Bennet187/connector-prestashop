@@ -48,8 +48,8 @@ jobs:
             cd /var/www/html
             sudo mkdir --parents /var/www/html/modules/jtlconnector
             sudo mv $GITHUB_WORKSPACE/* $_
-            cd /var/www/html/modules/
-            echo -------------IN MODULES DRINNE-----------------
+            cd /bin
+            echo ------------------------------
             ls
             
       - if: success()
