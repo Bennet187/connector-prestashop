@@ -32,8 +32,10 @@ jobs:
             sudo rm prestashop_1.7.6.3.zip Install_PrestaShop.html index.php
             sudo unzip prestashop.zip
             echo ----------------------------UNZIP FINISHED--------------------------------
-            mysql -u root -p root -e 'CREATE DATABASE prestashop;'
+            mysql -u root -p
+            root
             CREATE DATABASE prestashop
+            exit
             cd /var/www/html/install
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
      # - name: Buildprozess
