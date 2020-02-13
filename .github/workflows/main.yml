@@ -48,7 +48,7 @@ jobs:
             cd /var/www/html
             sudo mv $GITHUB_WORKSPACE/* /var/www/html/modules
             cd /var/www/html/modules
-            sudo php prestashop:module install jtlconnector
+            sudo php install jtlconnector
             
       - if: success()
         name: FTP Upload
