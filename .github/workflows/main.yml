@@ -23,12 +23,6 @@ jobs:
           repository: 'Bennet187/connector-prestashop'
           ref: 'feature/github-actions'
           clean: 'false'
-      - name: Shutdown Ubuntu MySQL (SUDO)
-        run: sudo service mysql stop
-      - uses: mirromutth/mysql-action@v1.1
-        with:
-          mysql database: 'prestashop'
-          mysql root password: test 
       - name: Prestashop-Installation Test
         run: |
             cd /var/www/html
@@ -37,11 +31,9 @@ jobs:
             sudo unzip prestashop_1.7.6.3.zip
             sudo rm prestashop_1.7.6.3.zip Install_PrestaShop.html index.php
             sudo unzip prestashop.zip
-            pwd
-            ls
-            echo ----------------------------FERTIG MIT UNZIP--------------------------------
+            echo ----------------------------UNZIP FINISHED--------------------------------
             cd /var/www/html/install
-            sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=test
+            sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
      # - name: Buildprozess
      #   run: |
      #     ./build.sh
