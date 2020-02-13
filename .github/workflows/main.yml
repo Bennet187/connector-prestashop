@@ -26,27 +26,32 @@ jobs:
       - name: Prestashop-Installation Test
         run: |
             cd /var/www/html
-            pwd
+            echo ---------------------------UNZIP STARTED----------------------------------
             sudo wget https://download.prestashop.com/download/releases/prestashop_1.7.6.3.zip
             sudo unzip prestashop_1.7.6.3.zip
             sudo rm prestashop_1.7.6.3.zip Install_PrestaShop.html index.php
             sudo unzip prestashop.zip
             echo ----------------------------UNZIP FINISHED--------------------------------
+            echo ----------------------------PRESTASHOP-INSTALL----------------------------
             mysql -u root -proot -e 'CREATE DATABASE prestashop'
             cd /var/www/html/install
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
-     # - name: Buildprozess
-     #   run: |
-     #     ./build.sh
-     #     mkdir zip
-     #     mv *.zip $GITHUB_WORKSPACE/zip
-     # - if: success()
-     #   name: FTP Upload
-     #   uses: SamKirkland/FTP-Deploy-Action@2.0.0
-     #   env:
-     #     FTP_SERVER: ${{ secrets.FTP_SERVER }}
-     #     FTP_USERNAME: ${{ secrets.FTP_USER }}
-     #     FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-     #     ARGS: --verbose 
-     #     REMOTE_DIR: build
-     #     LOCAL_DIR: zip
+            echo ----------------------------PRESTASHOP FINISHED---------------------------
+      - name: Buildprozess
+        run: |
+          echo ----------------------------BUILDING CONNECTOR----------------------------
+          cd $GITHUB_WORKSPACE
+          ./build.sh
+          mkdir zip
+          mv *.zip $GITHUB_WORKSPACE/zip
+          echo ----------------------------BUILDING FINISHED------------------------------
+      - if: success()
+        name: FTP Upload
+        uses: SamKirkland/FTP-Deploy-Action@2.0.0
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          ARGS: --verbose 
+          REMOTE_DIR: build
+          LOCAL_DIR: zip
