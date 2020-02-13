@@ -48,7 +48,8 @@ jobs:
             cd /var/www/html
             sudo mv $GITHUB_WORKSPACE/* /var/www/html/modules
             cd /var/www/html/modules
-            sudo php bin/console prestashope:module install jtlconnector
+            sudo php bin/console prestashop:module install jtlconnector
+            
       - if: success()
         name: FTP Upload
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
