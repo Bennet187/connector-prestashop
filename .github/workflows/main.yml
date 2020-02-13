@@ -17,34 +17,32 @@ jobs:
             sudo apt-get update
             sudo apt-get install apache2
       - uses: docker://composer:latest
+        
       - name: Repo auschecken
         uses: actions/checkout@v2
         with:
           repository: 'Bennet187/connector-prestashop'
           ref: 'feature/github-actions'
           clean: 'false'
+          
       - name: Prestashop-Installation Test
         run: |
             cd /var/www/html
-            echo ---------------------------UNZIP STARTED----------------------------------
             sudo wget https://download.prestashop.com/download/releases/prestashop_1.7.6.3.zip
             sudo unzip prestashop_1.7.6.3.zip
             sudo rm prestashop_1.7.6.3.zip Install_PrestaShop.html index.php
             sudo unzip prestashop.zip
-            echo ----------------------------UNZIP FINISHED--------------------------------
-            echo ----------------------------PRESTASHOP-INSTALL----------------------------
             mysql -u root -proot -e 'CREATE DATABASE prestashop'
             cd /var/www/html/install
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
-            echo ----------------------------PRESTASHOP FINISHED---------------------------
+            
       - name: Buildprozess
         run: |
-          echo ----------------------------BUILDING CONNECTOR----------------------------
-          cd $GITHUB_WORKSPACE
-          ./build.sh
-          mkdir zip
-          mv *.zip $GITHUB_WORKSPACE/zip
-          echo ----------------------------BUILDING FINISHED------------------------------
+            cd $GITHUB_WORKSPACE
+            ./build.sh
+            mkdir zip
+            mv *.zip $GITHUB_WORKSPACE/zip
+            
       - if: success()
         name: FTP Upload
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
