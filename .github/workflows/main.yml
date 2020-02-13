@@ -36,6 +36,8 @@ jobs:
             cd /var/www/html/install
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
             
+            sudo mv 
+            
       - name: Buildprozess
         run: |
             cd $GITHUB_WORKSPACE
@@ -43,6 +45,12 @@ jobs:
             mkdir zip
             mv *.zip $GITHUB_WORKSPACE/zip
             
+      - name: Connector installieren
+        run: |
+            cd modules
+            ls
+            cd $GITHUB_WORKSPACE
+            ls
       - if: success()
         name: FTP Upload
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
