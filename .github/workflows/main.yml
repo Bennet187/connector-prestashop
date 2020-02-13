@@ -47,8 +47,9 @@ jobs:
         run: |
             cd /var/www/html
             sudo mkdir --parents /var/www/html/modules/jtlconnector
-            sudo cp $GITHUB_WORKSPACE/* $_
-            cd $GITHUB_WORKSPACE
+            sudo mv $GITHUB_WORKSPACE/* $_
+            cd /var/www/html/modules/jtlconnector
+            echo ----------------------------------------
             ls
      #       php bin/console prestashop:module --help
      #       php bin/console prestashop:module install jtlconnector
