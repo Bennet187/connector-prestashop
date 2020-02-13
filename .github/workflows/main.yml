@@ -35,6 +35,7 @@ jobs:
             mysql -u root -proot -e 'CREATE DATABASE prestashop'
             cd /var/www/html/install
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
+            sudo rm /var/www/html/install
 
       - name: Buildprozess
         run: |
@@ -45,10 +46,11 @@ jobs:
             
       - name: Connector installieren
         run: |
-            cd modules
-            ls
-            cd $GITHUB_WORKSPACE
-            ls
+            cd /var/www/html
+            sudo mkdir modules
+            sudo mv $GITHUB_WORKSPACE/* /var/www/html/modules
+            cd /var/www/html/modules
+            sudo php bin/console prestashope:module install jtlconnector
       - if: success()
         name: FTP Upload
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
