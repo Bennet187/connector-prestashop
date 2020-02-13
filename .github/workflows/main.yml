@@ -49,7 +49,7 @@ jobs:
             sudo mkdir --parents /var/www/html/modules/jtlconnector
             sudo mv $GITHUB_WORKSPACE/* $_       
             cd /var/www/html
-            sudo chown -Rf www-data:www-data ./modules/
+            sudo chmod 777 ./modules/
             php bin/console prestashop:module --help
             php bin/console prestashop:module install jtlconnector
             
