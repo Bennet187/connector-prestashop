@@ -39,6 +39,7 @@ jobs:
       - name: Buildprozess
         run: |
             cd $GITHUB_WORKSPACE
+            sudo composer update
             ./build.sh
             mkdir zip
             mv *.zip $GITHUB_WORKSPACE/zip
