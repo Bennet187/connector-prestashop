@@ -35,7 +35,6 @@ jobs:
             mysql -u root -proot -e 'CREATE DATABASE prestashop'
             cd /var/www/html/install
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
-            sudo rm /var/www/html/install
 
       - name: Buildprozess
         run: |
