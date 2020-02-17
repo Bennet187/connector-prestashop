@@ -33,6 +33,7 @@ jobs:
             sudo unzip 1.7.6.3
             mysql -u root -proot -e 'CREATE DATABASE prestashop'
             cd /var/www/html/PrestaShop-1.7.6.3/
+            sudo chmod -R 777 /var/www/
             composer install
             cd /var/www/html/PrestaShop-1.7.6.3/install-dev
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
@@ -49,7 +50,6 @@ jobs:
             sudo mkdir --parents /var/www/html/modules/jtlconnector
             sudo mv $GITHUB_WORKSPACE/* $_       
             cd /var/www/html/modules/jtlconnector
-            sudo chmod -R 777 /var/www/
             cd /var/www/html
             sudo php bin/console prestashop:module --help
             sudo php bin/console prestashop:module install jtlconnector
