@@ -57,9 +57,8 @@ jobs:
             sudo mv $GITHUB_WORKSPACE/* $_       
             cd /var/www/html/modules/jtlconnector
             composer update
-            cd /var/www/html/modules/jtlconnector/plugins
-            sudo mkdir logs
             cd /var/www/html/
+            sudo mkdir log app/logs
             sudo php bin/console prestashop:module install jtlconnector
             
       - if: success()
