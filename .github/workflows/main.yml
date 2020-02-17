@@ -48,12 +48,13 @@ jobs:
             
       - name: Connector installieren
         run: |
-            sudo mkdir --parents /var/www/html/modules/jtlconnector
+            cd /var/www/html
+            ls -l
+            sudo mkdir --parents /var/www/html/PrestaShop-1.7.6.3/modules/jtlconnector
             sudo mv $GITHUB_WORKSPACE/* $_       
             cd /var/www/html/modules/jtlconnector
             composer update
             cd /var/www/html/PrestaShop-1.7.6.3/
-            sudo php bin/console prestashop:module --help
             sudo php bin/console prestashop:module install jtlconnector
             
       - if: success()
