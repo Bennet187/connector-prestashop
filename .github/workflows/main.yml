@@ -66,7 +66,7 @@ jobs:
         run:  printf "
             <VirtualHost *:80>
                 ServerName prestatest.lan
-                DocumentRoot /var/www/html
+                DocumentRoot /var/www/html/tests
             </VirtualHost> 
             <Directory /var/www/html/>
                 AllowOverride All
@@ -75,8 +75,8 @@ jobs:
           sudo echo "127.0.0.1  prestatest.lan" >> /etc/hosts
           sudo a2ensite prestatest.lan.conf
           sudo /etc/init.d/apache2 restart
+          sudo printf "{"connector_url": "prestatest.lan", "connector_token": ""} | sudo tee /var/www/html/tests/phpunit-conf.json
           cd /var/www/html/vendor/bin/
-          sudo printf "{"connector_url": "prestatest.lan", "connector_token": ""} | sudo tee /var/www/html/vendor/bin/phpunit-conf.json
           ./phpunit
 
       - if: success()
