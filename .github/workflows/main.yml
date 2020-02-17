@@ -1,4 +1,4 @@
-name: CI
+name: Integrationstests
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'Bennet187/connector-prestashop'
-          ref: 'develop'
+          ref: 'feature/github-actions'
           clean: 'false'
           
       - name: Prestashop-Installation Test
