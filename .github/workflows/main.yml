@@ -16,7 +16,8 @@ jobs:
       - run: |
             sudo apt-get update
             sudo apt-get install apache2
-            sudo apt-get install php-intl
+            add-apt-repository -y ppa:ondrej/php
+            apt-get install php7.2-intl
       - uses: docker://composer:latest
         
       - name: Repo auschecken
