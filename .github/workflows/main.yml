@@ -33,10 +33,11 @@ jobs:
             sudo wget -nv https://codeload.github.com/PrestaShop/PrestaShop/zip/1.7.6.3
             sudo unzip -qq 1.7.6.3
             mysql -u root -proot -e 'CREATE DATABASE prestashop'
-            cd /var/www/html/PrestaShop-1.7.6.3/
+            sudo mv /var/www/html/PrestaShop-1.7.6.3/* /var/www/html/
+            sudo rm PrestaShop-1.7.6.3
             sudo chmod -R 777 /var/www/
             composer install
-            cd /var/www/html/PrestaShop-1.7.6.3/install-dev
+            cd /var/www/html/install-dev
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
 
       - name: Buildprozess
@@ -50,11 +51,11 @@ jobs:
         run: |
             cd /var/www/html
             ls -l
-            sudo mkdir --parents /var/www/html/PrestaShop-1.7.6.3/modules/jtlconnector
+            sudo mkdir --parents /var/www/html/modules/jtlconnector
             sudo mv $GITHUB_WORKSPACE/* $_       
             cd /var/www/html/modules/jtlconnector
             composer update
-            cd /var/www/html/PrestaShop-1.7.6.3/
+            cd /var/www/html/
             sudo php bin/console prestashop:module install jtlconnector
             
       - if: success()
