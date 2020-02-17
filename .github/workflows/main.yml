@@ -28,12 +28,10 @@ jobs:
       - name: Prestashop-Installation Test
         run: |
             cd /var/www/html
-            sudo wget https://download.prestashop.com/download/releases/prestashop_1.7.6.3.zip
-            sudo unzip prestashop_1.7.6.3.zip
-            sudo rm prestashop_1.7.6.3.zip Install_PrestaShop.html index.php
-            sudo unzip prestashop.zip
+            sudo wget https://codeload.github.com/PrestaShop/PrestaShop/zip/1.7.6.3
+            sudo unzip PrestaShop-1.7.6.3.zip
             mysql -u root -proot -e 'CREATE DATABASE prestashop'
-            cd /var/www/html/install
+            cd /var/www/html/PrestaShop-1.7.6.3/install-dev
             sudo composer update
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
 
