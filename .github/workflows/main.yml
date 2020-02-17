@@ -44,7 +44,7 @@ jobs:
       - name: Buildprozess
         run: |
             cd $GITHUB_WORKSPACE
-            ./build.sh
+            sudo ./build.sh
             mkdir zip
             mv *.zip $GITHUB_WORKSPACE/zip
             
