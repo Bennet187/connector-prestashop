@@ -20,6 +20,26 @@ jobs:
             sudo apt-get install php7.2-intl
       - uses: docker://composer:latest
         
+      - name: Virtuellen Host eintragen
+        run:  printf "
+              NameVirtualHost *:80
+              <VirtualHost  *:80>
+                ServerAdmin trashmail@trash.com
+                DocumentRoot /var/www/html/tests
+                ServerName prestatest.lan
+                ServerAlias *.prestatest.lan
+                ErrorLog logs/prestatest.lan-error_log
+                CustomLog logs/prestatest.lan-access_log common
+              </VirtualHost>" | sudo tee /etc/apache2/sites-available/prestatest.lan.conf
+              cat /etc/apache2/sites-available/prestatest.lan.conf
+      - run: |
+          sudo echo "127.0.0.1  prestatest.lan" >> /etc/hosts
+          sudo a2ensite prestatest.lan.conf
+          sudo /etc/init.d/apache2 restart
+          sudo printf "{"connector_url": "prestatest.lan", "connector_token": ""} | sudo tee /var/www/html/tests/phpunit-conf.json
+          cd /var/www/html/vendor/bin/
+          ./phpunit
+
       - name: Repo auschecken
         uses: actions/checkout@v2
         with:
@@ -62,24 +82,6 @@ jobs:
             composer update
             cd /var/www/html
             sudo php bin/console prestashop:module install jtlconnector
-      - name: Virtuellen Host eintragen
-        run:  printf "
-              NameVirtualHost *:80
-              <VirtualHost  *:80>
-                ServerAdmin trashmail@trash.com
-                DocumentRoot /var/www/html/tests
-                ServerName prestatest.lan
-                ServerAlias *.prestatest.lan
-                ErrorLog logs/prestatest.lan-error_log
-                CustomLog logs/prestatest.lan-access_log common
-              </VirtualHost>" | sudo tee /etc/apache2/sites-available/prestatest.lan.conf
-      - run: |
-          sudo echo "127.0.0.1  prestatest.lan" >> /etc/hosts
-          sudo a2ensite prestatest.lan.conf
-          sudo /etc/init.d/apache2 restart
-          sudo printf "{"connector_url": "prestatest.lan", "connector_token": ""} | sudo tee /var/www/html/tests/phpunit-conf.json
-          cd /var/www/html/vendor/bin/
-          ./phpunit
 
       - if: success()
         name: FTP Upload
