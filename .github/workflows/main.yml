@@ -30,7 +30,7 @@ jobs:
       - name: Prestashop-Installation Test
         run: |
             cd /var/www/html
-            sudo wget https://codeload.github.com/PrestaShop/PrestaShop/zip/1.7.6.3
+            sudo wget -nv https://codeload.github.com/PrestaShop/PrestaShop/zip/1.7.6.3
             sudo unzip 1.7.6.3
             mysql -u root -proot -e 'CREATE DATABASE prestashop'
             cd /var/www/html/PrestaShop-1.7.6.3/
@@ -51,6 +51,7 @@ jobs:
             sudo mkdir --parents /var/www/html/modules/jtlconnector
             sudo mv $GITHUB_WORKSPACE/* $_       
             cd /var/www/html/modules/jtlconnector
+            composer update
             cd /var/www/html
             sudo php bin/console prestashop:module --help
             sudo php bin/console prestashop:module install jtlconnector
