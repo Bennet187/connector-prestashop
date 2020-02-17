@@ -34,7 +34,7 @@ jobs:
             sudo unzip -qq 1.7.6.3
             mysql -u root -proot -e 'CREATE DATABASE prestashop'
             sudo mv /var/www/html/PrestaShop-1.7.6.3/* /var/www/html/
-            sudo rm PrestaShop-1.7.6.3
+            sudo rmdir PrestaShop-1.7.6.3
             sudo chmod -R 777 /var/www/
             composer install
             cd /var/www/html/install-dev
