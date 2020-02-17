@@ -13,9 +13,8 @@
             "role": "Founder"
         }
     ],
-    "minimum-stability": "dev",
     "config": {
-        "vendor-dir": "vendor",
+        "vendor-dir": "library",
         "platform": {
             "php": "5.6.4"
         }
