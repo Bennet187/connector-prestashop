@@ -44,7 +44,9 @@ jobs:
       - name: Buildprozess
         run: |
             cd $GITHUB_WORKSPACE
-            sudo ./build.sh
+            sudo composer update --no-dev
+            sudo php ./phing.phar release
+            sudo composer update
             mkdir zip
             mv *.zip $GITHUB_WORKSPACE/zip
             
