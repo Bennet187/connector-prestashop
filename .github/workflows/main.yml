@@ -64,13 +64,15 @@ jobs:
             sudo php bin/console prestashop:module install jtlconnector
       - name: Virtuellen Host eintragen
         run:  printf "
-            <VirtualHost *:80>
-                ServerName prestatest.lan
+              NameVirtualHost *:80
+              <VirtualHost  *:80>
+                ServerAdmin trashmail@trash.com
                 DocumentRoot /var/www/html/tests
-            </VirtualHost> 
-            <Directory /var/www/html/>
-                AllowOverride All
-            </Directory>" | sudo tee /etc/apache2/sites-available/prestatest.lan.conf
+                ServerName prestatest.lan
+                ServerAlias *.prestatest.lan
+                ErrorLog logs/prestatest.lan-error_log
+                CustomLog logs/prestatest.lan-access_log common
+              </VirtualHost>" | sudo tee /etc/apache2/sites-available/prestatest.lan.conf
       - run: |
           sudo echo "127.0.0.1  prestatest.lan" >> /etc/hosts
           sudo a2ensite prestatest.lan.conf
