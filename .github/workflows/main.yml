@@ -44,9 +44,7 @@ jobs:
       - name: Buildprozess
         run: |
             cd $GITHUB_WORKSPACE
-            sudo composer update --no-dev
-            sudo php ./phing.phar release
-            sudo composer update
+            ./build.sh
             mkdir zip
             mv *.zip $GITHUB_WORKSPACE/zip
             
@@ -57,6 +55,7 @@ jobs:
             sudo mv $GITHUB_WORKSPACE/* $_     
             sudo mv /var/www/html/modules/jtlconnector/zip $GITHUB_WORKSPACE
             cd /var/www/html/modules/jtlconnector
+            sudo tree
             sudo mkdir logs
             sudo chmod -R 777 logs
             composer update
