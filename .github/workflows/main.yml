@@ -29,7 +29,7 @@ jobs:
         run: |
             cd /var/www/html
             sudo wget https://codeload.github.com/PrestaShop/PrestaShop/zip/1.7.6.3
-            sudo unzip PrestaShop-1.7.6.3.zip
+            sudo unzip 1.7.6.3.zip
             mysql -u root -proot -e 'CREATE DATABASE prestashop'
             cd /var/www/html/PrestaShop-1.7.6.3/install-dev
             sudo composer update
