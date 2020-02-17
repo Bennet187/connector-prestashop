@@ -71,11 +71,11 @@ jobs:
                 AllowOverride All
             </Directory>" | sudo tee /etc/apache2/sites-available/prestatest.lan.conf
       - run: |
-          echo "127.0.0.1  prestatest.lan" >> /etc/hosts
+          sudo echo "127.0.0.1  prestatest.lan" >> /etc/hosts
           sudo a2ensite prestatest.lan.conf
           sudo systemctl reload apache2
           cd /var/www/html/vendor/bin/
-          printf "{"connector_url": "prestatest.lan", "connector_token": ""} | sudo tee /var/www/html/vendor/bin/phpunit-conf.json
+          sudo printf "{"connector_url": "prestatest.lan", "connector_token": ""} | sudo tee /var/www/html/vendor/bin/phpunit-conf.json
           ./phpunit
 
       - if: success()
