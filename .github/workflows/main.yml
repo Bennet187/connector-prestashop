@@ -36,6 +36,7 @@ jobs:
             sudo mv /var/www/html/PrestaShop-1.7.6.3/* /var/www/html/
             sudo chmod -R 777 /var/www/
             composer install
+            make assets
             cd /var/www/html/install-dev
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
 
@@ -54,7 +55,8 @@ jobs:
             sudo mv $GITHUB_WORKSPACE/* $_       
             cd /var/www/html/modules/jtlconnector
             composer update
-            composer install
+            cd /var/www/html/modules/jtlconnector/plugins
+            sudo mkdir logs
             cd /var/www/html/
             sudo php bin/console prestashop:module install jtlconnector
             
