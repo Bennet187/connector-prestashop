@@ -37,6 +37,7 @@ jobs:
             cd /var/www/html/PrestaShop-1.7.6.3
             cd /var/www/html
             sudo chmod -R 777 /var/www/
+            sudo chmod -R 777 /etc/hosts
             composer install
             cd /var/www/html/install-dev
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
