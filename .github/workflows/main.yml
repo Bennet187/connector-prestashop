@@ -9,11 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: PHP & Composer installieren
-        uses: shivammathur/setup-php@v1
+        uses: |
+          shivammathur/setup-php@v1
+          docker://composer:latest
         with: 
           php-version: '7.2'
           ini-values: phar.readonly=Off
-      - uses: docker://composer:latest
       
       - name: Apache & benötigte Pakete installieren
         run: |
@@ -53,7 +54,8 @@ jobs:
       - name: JTL-PrestaShop-Connector installieren
         run: |
             sudo mkdir --parents /var/www/html/modules/jtlconnector
-            sudo mv !(zip) $GITHUB_WORKSPACE/* $_     
+            cd $GITHUB_WORKSPACE
+            sudo mv !zip /var/www/html/modules/jtlconnector     
             cd /var/www/html/modules/jtlconnector
             sudo mkdir logs
             sudo chmod -R 777 logs
@@ -61,8 +63,8 @@ jobs:
             cd /var/www/html
             sudo php bin/console prestashop:module install jtlconnector
 
-      - name: Virtuellen Host eintragen
-        run:  |
+      - name: Vorbereitung und Durchführung der Integrationstests
+        run: |
             printf "<VirtualHost  *:80>\nServerAdmin webmaster@localhost\nDocumentRoot /var/www/html\nServerName prestatest.lan\nServerAlias *.prestatest.lan\nErrorLog logs/prestatest.lan-error_log\nCustomLog logs/prestatest.lan-access_log common\n</VirtualHost>" | sudo tee /etc/apache2/sites-available/prestatest.lan.conf
             sudo mkdir /etc/apache2/logs
             sudo chmod -R 777 /etc/apache2/logs
