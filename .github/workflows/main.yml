@@ -39,7 +39,6 @@ jobs:
             cd /var/www/html
             sudo chmod -R 777 /var/www/
             composer install
-            composer create-test-db
             cd /var/www/html/install-dev
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
 
@@ -76,7 +75,7 @@ jobs:
           sudo /etc/init.d/apache2 restart
           printf "{\"connector_url\": \"prestatest.lan\", \"connector_token\": \"\"}" | sudo tee /var/www/html/tests/phpunit-conf.json
           cd /var/www/html/vendor/bin/
-          ./phpunit /var/www/html/tests
+          ./phpunit --bootstrap /var/www/html/tests/bootstrap.php /var/www/html/tests/Integration
 
       - if: success()
         name: FTP Upload
