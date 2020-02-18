@@ -8,37 +8,31 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: PHP & Composer installieren
-        uses: shivammathur/setup-php@v1
+      - uses: docker://composer:latest
+      - uses: shivammathur/setup-php@v1
         with: 
           php-version: '7.2'
-          ini-values: phar.readonly=Off
-          
-      - name: Composer installieren
-        uses: docker://composer:latest
-      
+          ini-values: phar.readonly=Off  
+      - uses: actions/checkout@v2
+        with:
+          repository: 'Bennet187/connector-prestashop'
+          ref: 'feature/github-actions'
+          clean: 'false'
+
       - name: Apache & PHP-Erweiterungen installieren
         run: |
             sudo apt-get update
             sudo apt-get install apache2
             sudo add-apt-repository -y ppa:ondrej/php
             sudo apt-get install php7.2-intl
-        
-      - name: Repository auschecken
-        uses: actions/checkout@v2
-        with:
-          repository: 'Bennet187/connector-prestashop'
-          ref: 'feature/github-actions'
-          clean: 'false'
-          
+                  
       - name: PrestaShop installieren
         run: |
+            mysql -u root -proot -e 'CREATE DATABASE prestashop'
             cd /var/www/html
             sudo wget -nv https://codeload.github.com/PrestaShop/PrestaShop/zip/1.7.6.3
             sudo unzip -qq 1.7.6.3
-            mysql -u root -proot -e 'CREATE DATABASE prestashop'
             sudo mv /var/www/html/PrestaShop-1.7.6.3/* /var/www/html/
-            cd /var/www/html
             sudo chmod -R 777 /var/www/
             composer install
             cd /var/www/html/install-dev
@@ -54,8 +48,8 @@ jobs:
       - name: JTL-PrestaShop-Connector installieren
         run: |
             sudo mkdir --parents /var/www/html/modules/jtlconnector
-            cd $GITHUB_WORKSPACE
-            sudo mv !zip /var/www/html/modules/jtlconnector     
+            sudo mv $GITHUB_WORKSPACE/* /var/www/html/modules/jtlconnector
+            sudo mv /var/www/html/modules/jtlconnector/zip $GITHUB_WORKSPACE     
             cd /var/www/html/modules/jtlconnector
             sudo mkdir logs
             sudo chmod -R 777 logs
