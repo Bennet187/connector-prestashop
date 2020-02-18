@@ -74,7 +74,8 @@ jobs:
           sudo apachectl configtest
           sudo /etc/init.d/apache2 restart
           printf "{\"connector_url\": \"prestatest.lan\", \"connector_token\": \"\"}" | sudo tee /var/www/html/tests/phpunit-conf.json
-          ./var/www/html/vendor/bin/phpunit /var/www/html
+          cd /var/www/html/vendor/bin
+          sudo ./phpunit /var/www/html
 
       - if: success()
         name: FTP Upload
