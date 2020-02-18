@@ -23,8 +23,10 @@ jobs:
         
       - name: Virtuellen Host eintragen
         run:  printf "<VirtualHost  *:80>\nServerAdmin webmaster@localhost\nDocumentRoot /var/www/html\nServerName prestatest.lan\nServerAlias *.prestatest.lan\nErrorLog logs/prestatest.lan-error_log\nCustomLog logs/prestatest.lan-access_log common\n</VirtualHost>" | sudo tee /etc/apache2/sites-available/prestatest.lan.conf
-              cat /etc/apache2/sites-available/prestatest.lan.conf
       - run: |
+          sudo mkdir /etc/apache2/logs
+          sudo chmod -R 777 /etc/apache2/logs
+          cat /etc/apache2/sites-available/prestatest.lan.conf
           sudo echo "127.0.0.1  prestatest.lan" >> /etc/hosts
           sudo a2ensite prestatest.lan.conf
           sudo apachectl configtest
