@@ -28,7 +28,7 @@ jobs:
           ref: 'feature/github-actions'
           clean: 'false'
           
-      - name: Prestashop-Installation Test
+      - name: Einrichtung PrestaShop
         run: |
             cd /var/www/html
             sudo wget -nv https://codeload.github.com/PrestaShop/PrestaShop/zip/1.7.6.3
@@ -39,6 +39,7 @@ jobs:
             cd /var/www/html
             sudo chmod -R 777 /var/www/
             composer install
+            composer create-test-db
             cd /var/www/html/install-dev
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
 
@@ -62,7 +63,6 @@ jobs:
             composer update
             cd /var/www/html
             sudo php bin/console prestashop:module install jtlconnector
-            sudo php composer.phar create-test-db
 
       - name: Virtuellen Host eintragen
         run:  |
