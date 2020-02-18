@@ -22,16 +22,7 @@ jobs:
       - uses: docker://composer:latest
         
       - name: Virtuellen Host eintragen
-        run:  printf "
-              NameVirtualHost *:80
-              <VirtualHost  *:80>
-                ServerAdmin trashmail@trash.com
-                DocumentRoot /var/www/html/tests
-                ServerName prestatest.lan
-                ServerAlias *.prestatest.lan
-                ErrorLog logs/prestatest.lan-error_log
-                CustomLog logs/prestatest.lan-access_log common
-              </VirtualHost>" | sudo tee /etc/apache2/sites-available/prestatest.lan.conf
+        run:  printf "NameVirtualHost *:80\n<VirtualHost  *:80>\nServerAdmin trashmail@trash.com\nDocumentRoot /var/www/html/tests\nServerName prestatest.lan\nServerAlias *.prestatest.lan\nErrorLog logs/prestatest.lan-error_log\nCustomLog logs/prestatest.lan-access_log common\n</VirtualHost>" | sudo tee /etc/apache2/sites-available/prestatest.lan.conf
               cat /etc/apache2/sites-available/prestatest.lan.conf
       - run: |
           sudo echo "127.0.0.1  prestatest.lan" >> /etc/hosts
