@@ -8,55 +8,53 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: PHP- und Composer-Setup
+      - name: PHP & Composer installieren
         uses: shivammathur/setup-php@v1
         with: 
           php-version: '7.2'
           ini-values: phar.readonly=Off
-      - run: |
+      - uses: docker://composer:latest
+      
+      - name: Apache & benötigte Pakete installieren
+      -  run: |
             sudo apt-get update
             sudo apt-get install apache2
             sudo add-apt-repository -y ppa:ondrej/php
             sudo apt-get install php7.2-intl
             sudo chmod -R 777 /etc/hosts
-      - uses: docker://composer:latest
         
-      - name: Repo auschecken
+      - name: Repository auschecken
         uses: actions/checkout@v2
         with:
           repository: 'Bennet187/connector-prestashop'
           ref: 'feature/github-actions'
           clean: 'false'
           
-      - name: Einrichtung PrestaShop
+      - name: PrestaShop installieren
         run: |
             cd /var/www/html
             sudo wget -nv https://codeload.github.com/PrestaShop/PrestaShop/zip/1.7.6.3
             sudo unzip -qq 1.7.6.3
             mysql -u root -proot -e 'CREATE DATABASE prestashop'
             sudo mv /var/www/html/PrestaShop-1.7.6.3/* /var/www/html/
-            cd /var/www/html/PrestaShop-1.7.6.3
             cd /var/www/html
             sudo chmod -R 777 /var/www/
             composer install
             cd /var/www/html/install-dev
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
 
-      - name: Buildprozess
+      - name: JTL-PrestaShop-Connector bauen
         run: |
             cd $GITHUB_WORKSPACE
             ./build.sh
             mkdir zip
             mv *.zip $GITHUB_WORKSPACE/zip
             
-      - name: Connector installieren
+      - name: JTL-PrestaShop-Connector installieren
         run: |
-            cd /var/www/html
             sudo mkdir --parents /var/www/html/modules/jtlconnector
-            sudo mv $GITHUB_WORKSPACE/* $_     
-            sudo mv /var/www/html/modules/jtlconnector/zip $GITHUB_WORKSPACE
+            sudo mv !(zip) $GITHUB_WORKSPACE/* $_     
             cd /var/www/html/modules/jtlconnector
-            ls -l
             sudo mkdir logs
             sudo chmod -R 777 logs
             composer update
@@ -68,10 +66,8 @@ jobs:
           printf "<VirtualHost  *:80>\nServerAdmin webmaster@localhost\nDocumentRoot /var/www/html\nServerName prestatest.lan\nServerAlias *.prestatest.lan\nErrorLog logs/prestatest.lan-error_log\nCustomLog logs/prestatest.lan-access_log common\n</VirtualHost>" | sudo tee /etc/apache2/sites-available/prestatest.lan.conf
           sudo mkdir /etc/apache2/logs
           sudo chmod -R 777 /etc/apache2/logs
-          cat /etc/apache2/sites-available/prestatest.lan.conf
           sudo echo "127.0.0.1  prestatest.lan" >> /etc/hosts
           sudo a2ensite prestatest.lan.conf
-          sudo apachectl configtest
           sudo /etc/init.d/apache2 restart
           printf "{\"connector_url\": \"prestatest.lan\", \"connector_token\": \"\"}" | sudo tee /var/www/html/tests/phpunit-conf.json
           cd /var/www/html/vendor/bin
