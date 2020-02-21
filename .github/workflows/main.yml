@@ -66,9 +66,10 @@ jobs:
             sudo echo "127.0.0.1  prestatest.lan" >> /etc/hosts
             sudo a2ensite prestatest.lan.conf
             sudo /etc/init.d/apache2 restart
-            mysql -u root -proot prestashop -e 'SELECT * FROM `ps_configuration` WHERE name="jtlconnector_pass" LIMIT 1'
+            token=$(mysql -u root -proot prestashop -e 'SELECT value FROM `ps_configuration` WHERE name="jtlconnector_pass" LIMIT 1')
+            echo $token
             
-            printf "{\"connector_url\": \"prestatest.lan\", \"connector_token\": \"$(!!)\"}" | sudo tee /var/www/html/tests/phpunit-conf.json
+            printf "{\"connector_url\": \"prestatest.lan\", \"connector_token\": \"$token\"}" | sudo tee /var/www/html/tests/phpunit-conf.json
             cd /var/www/html/vendor/bin
             sudo ./phpunit /var/www/html/modules/jtlconnector
 
