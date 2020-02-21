@@ -34,6 +34,7 @@ jobs:
             sudo unzip -qq 1.7.6.3
             sudo mv /var/www/html/PrestaShop-1.7.6.3/* /var/www/html/
             sudo chmod -R 777 /var/www/
+            composer install
             cd /var/www/html/install-dev
             sudo php index_cli.php --domain=localhost --db_server=localhost --db_name=prestashop --db_user=root --db_password=root
 
