@@ -68,8 +68,8 @@ jobs:
             sudo /etc/init.d/apache2 restart
             token=$(mysql -u root -proot prestashop -se 'SELECT value FROM `ps_configuration` WHERE name="jtlconnector_pass"')
             printf "{\"connector_url\": \"prestatest.lan\", \"connector_token\": \"$token\"}" | sudo tee /var/www/html/tests/phpunit-conf.json
-            cd /var/www/html/vendor/bin
-            sudo ./phpunit /var/www/html/modules/jtlconnector
+            cd /var/www/html/modules/jtlconnector
+            sudo ./var/www/html/vendor/bin/phpunit
 
       - if: success()
         name: FTP Upload
