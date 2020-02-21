@@ -3,7 +3,7 @@
 use jtl\Connector\Presta\Mapper\PrimaryKeyMapper;
 
 require '../../config/config.inc.php';
-$loader = require 'vendor/autoload.php';
+$loader = require 'library/autoload.php';
 
 const TEST_DIR = __DIR__;
 
