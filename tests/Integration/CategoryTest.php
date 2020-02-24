@@ -4,7 +4,7 @@
 namespace Tests;
 
 
-class CategoryTest extends \ConnectorIntegrationTests\Integration\CategoryTest
+class CategoryTest extends \Connector\IntegrationTests\Integration\CategoryTest
 {
     public function getIgnoreArray()
     {
