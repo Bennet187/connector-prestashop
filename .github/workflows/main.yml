@@ -72,7 +72,6 @@ jobs:
             token=$(mysql -u root -proot prestashop -se 'SELECT value FROM `ps_configuration` WHERE name="jtlconnector_pass"')
             printf "{\"connector_url\": \"prestatest.lan\", \"connector_token\": \"$token\"}" | sudo tee /var/www/html/modules/jtlconnector/tests/test-config.json
             cd /var/www/html/modules/jtlconnector
-            ls
             sudo ./library/bin/phpunit -c /var/www/html/modules/jtlconnector/phpunit.xml
 
       - if: success()
