@@ -62,7 +62,7 @@ jobs:
 
       - name: Integrationstests
         run: |
-            printf "Listen 80\n<VirtualHost  *:80>\nServerAdmin webmaster@localhost\nDocumentRoot /var/www/html\nServerName prestatest.lan \nServerAlias *.prestatest.lan\nErrorLog logs/prestatest.lan-error_log\nCustomLog logs/prestatest.lan-access_log common\n</VirtualHost>" | sudo tee /etc/apache2/sites-available/prestatest.lan.conf
+            printf "<VirtualHost  *:80>\nServerAdmin webmaster@localhost\nDocumentRoot /var/www/html\nServerName prestatest.lan \nServerAlias *.prestatest.lan\nErrorLog logs/prestatest.lan-error_log\nCustomLog logs/prestatest.lan-access_log common\n</VirtualHost>" | sudo tee /etc/apache2/sites-available/prestatest.lan.conf
             sudo mkdir /etc/apache2/logs
             sudo chmod -R 777 /etc/apache2/logs
             sudo chmod -R 777 /etc/hosts
